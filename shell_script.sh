@@ -1,0 +1,1 @@
+python /home/ms/Python/rp_erste_schritte/ads1115.py

@@ -1,0 +1,16 @@
+Adafruit Blinka
+===============
+Die virtuelle Umgebung muss nach jedem Reboot neu aktiviert werden. 
+
+- Dann konnte eine Adafruit CircuitPython Library mit pip installiert werden /1/.
+- Dann laufen die Adafruit Blinka Programme  /1/.
+- Alternative: Die Adafruit Blinka Programme laufen auch, wenn sie mit
+  /home/ms/env/bin/python3 aufgerufen werden /2/.
+
+Aktivierung:   source env/bin/activate       /1/
+
+Deaktivierung: deactivate                    /1/
+
+Quellen: 
+/1/ https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/installing-circuitpython-on-raspberry-pi
+/2/ https://learn.adafruit.com/python-virtual-environment-usage-on-raspberry-pi/more-venv-details
