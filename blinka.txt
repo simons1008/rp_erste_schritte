@@ -7,7 +7,7 @@ Die virtuelle Umgebung muss nach jedem Reboot neu aktiviert werden.
 - Alternative: Die Adafruit Blinka Programme laufen auch, wenn sie mit
   /home/ms/env/bin/python3 aufgerufen werden /2/.
 
-Aktivierung:   source env/bin/activate       /1/
+Aktivierung:   source ~/env/bin/activate     /1/
 
 Deaktivierung: deactivate                    /1/
 
