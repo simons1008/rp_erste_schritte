@@ -24,6 +24,10 @@ chan = AnalogIn(ads, ADS.P0)
 
 print("{:>5}\t{:>5}".format("raw", "v"))
 
-while True:
-    print("{:>5}\t{:>5.3f}".format(chan.value, chan.voltage))
-    time.sleep(0.5)
+try:
+    while True:
+        print("{:>5}\t{:>5.3f}".format(chan.value, chan.voltage))
+        time.sleep(0.5)
+except KeyboardInterrupt:
+    print("Program terminated by user")
+
