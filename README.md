@@ -1,6 +1,7 @@
 # RP Erste Schritte
 
 Meine ersten Schritte mit Raspberry Pi und OS Bookworm umfassen:
+
 - Ansteuerung der GPIO Pins
 - Installation von Adafruit Blinka
 - Starten der virtuellen Umgegebung für die Bibliotheken, die auf Blinka aufsetzen
