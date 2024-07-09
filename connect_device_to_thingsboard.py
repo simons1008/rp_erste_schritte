@@ -1,3 +1,8 @@
+# Programm verbindet einen Raspberry Pi 4 mit Thingsboard
+# Programm sendet Telemetrie-Daten des Pi 4
+# Programm empfängt die "blinkingPeriod" für Telemetrie und LED
+# Quelle: https://thingsboard.io/docs/devices-library/raspberry-pi-4/
+
 import logging.handlers
 import time
 import os
