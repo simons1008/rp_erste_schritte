@@ -10,3 +10,4 @@ Meine ersten Schritte mit Raspberry Pi und OS Bookworm umfassen:
 - die Datei autostart.desktop, die den Webserver beim Booten im Hintergrund startet
 - einen schnurlosen Taster, der mit einem IoT Webservice zum Testen zusammenarbeitet
 - GUI zur Darstellung der Analogwerte vom ADS1115
+- Verbindung zum ThingsBoard Live Demo Server, Senden von Telemetrie-Daten, Empfang der "blinkingPeriod"
