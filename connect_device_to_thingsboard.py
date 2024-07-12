@@ -8,8 +8,10 @@ import time
 import os
 import digitalio
 import board
-   
 from tb_gateway_mqtt import TBDeviceMqttClient
+import busio
+import adafruit_ads1x15.ads1115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
    
 ACCESS_TOKEN = "TEST_TOKEN"
 THINGSBOARD_SERVER = 'demo.thingsboard.io'
@@ -27,14 +29,21 @@ led.direction = digitalio.Direction.OUTPUT
 
 # Anfangswert der LED setzen
 led.value = True
-   
-   
+
+# I2C Bus definieren, ADC object erzeugen, Input auf Kanal 0
+i2c = busio.I2C(board.SCL, board.SDA)
+ads = ADS.ADS1115(i2c)
+chan = AnalogIn(ads, ADS.P0)
+
+# Anfangswert des Analog Input einlesen
+analog_voltage = chan.voltage
+
 # callback function that will call when we will change value of our Shared Attribute
 def attribute_callback(result, _):
-     global period
-     print(result)
-     # make sure that you paste YOUR shared attribute name
-     period = result.get('blinkingPeriod', 1.0)
+    global period
+    print(result)
+    # make sure that you paste YOUR shared attribute name
+    period = result.get('blinkingPeriod', 1.0)
 
 # callback function that will call when we will send RPC
 def rpc_callback(id, request_body):
@@ -73,38 +82,43 @@ def get_data():
         'RAM_usage': ram_usage,
         'swap_memory_usage': swap_memory_usage,
         'boot_time': boot_time,
-        'avg_load': avg_load
+        'avg_load': avg_load,
+        'analog_voltage': analog_voltage
     }
     print(attributes, telemetry)
     return attributes, telemetry
    
 # request attribute callback
 def sync_state(result, exception=None):
-     global period
-     if exception is not None:
-         print("Exception: " + str(exception))
-     else:
-         period = result.get('shared', {'blinkingPeriod': 1.0})['blinkingPeriod']
+    global period
+    if exception is not None:
+        print("Exception: " + str(exception))
+    else:
+        period = result.get('shared', {'blinkingPeriod': 1.0})['blinkingPeriod']
 
 def main():
-     global client
-     client = TBDeviceMqttClient(THINGSBOARD_SERVER, username=ACCESS_TOKEN)
-     client.connect()
-     client.request_attributes(shared_keys=['blinkingPeriod'], callback=sync_state)
-        
-     # now attribute_callback will process shared attribute request from server
-     sub_id_1 = client.subscribe_to_attribute("blinkingPeriod", attribute_callback)
-     sub_id_2 = client.subscribe_to_all_attributes(attribute_callback)
+    global client, analog_voltage
+    client = TBDeviceMqttClient(THINGSBOARD_SERVER, username=ACCESS_TOKEN)
+    client.connect()
+    client.request_attributes(shared_keys=['blinkingPeriod'], callback=sync_state)
+       
+    # now attribute_callback will process shared attribute request from server
+    sub_id_1 = client.subscribe_to_attribute("blinkingPeriod", attribute_callback)
+    sub_id_2 = client.subscribe_to_all_attributes(attribute_callback)
 
-     # now rpc_callback will process rpc requests from server
-     client.set_server_side_rpc_request_handler(rpc_callback)
+    # now rpc_callback will process rpc requests from server
+    client.set_server_side_rpc_request_handler(rpc_callback)
 
-     while not client.stopped:
-         attributes, telemetry = get_data()
-         client.send_attributes(attributes)
-         client.send_telemetry(telemetry)
-         time.sleep(period)
-         led.value = not led.value
+    try: 
+        while not client.stopped:
+            attributes, telemetry = get_data()
+            client.send_attributes(attributes)
+            client.send_telemetry(telemetry)
+            time.sleep(period)
+            led.value = not led.value
+            analog_voltage = chan.voltage
+    except KeyboardInterrupt:
+        print("Program terminated by user")
    
 if __name__=='__main__':
     if ACCESS_TOKEN != "TEST_TOKEN":
