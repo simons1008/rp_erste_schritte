@@ -119,6 +119,7 @@ def main():
             analog_voltage = chan.voltage
     except KeyboardInterrupt:
         print("Program terminated by user")
+        client.disconnect()
    
 if __name__=='__main__':
     if ACCESS_TOKEN != "TEST_TOKEN":
