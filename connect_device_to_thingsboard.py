@@ -23,6 +23,9 @@ client = None
 # default blinking period
 period = 1.0
 
+# alive Variable definieren
+alive = False
+
 # LED definieren
 led = digitalio.DigitalInOut(board.D17)
 led.direction = digitalio.Direction.OUTPUT
@@ -83,7 +86,8 @@ def get_data():
         'swap_memory_usage': swap_memory_usage,
         'boot_time': boot_time,
         'avg_load': avg_load,
-        'analog_voltage': analog_voltage
+        'analog_voltage': analog_voltage,
+        'alive': alive
     }
     print(attributes, telemetry)
     return attributes, telemetry
@@ -97,7 +101,7 @@ def sync_state(result, exception=None):
         period = result.get('shared', {'blinkingPeriod': 1.0})['blinkingPeriod']
 
 def main():
-    global client, analog_voltage
+    global client, analog_voltage, alive
     client = TBDeviceMqttClient(THINGSBOARD_SERVER, username=ACCESS_TOKEN)
     client.connect()
     client.request_attributes(shared_keys=['blinkingPeriod'], callback=sync_state)
@@ -117,6 +121,7 @@ def main():
             time.sleep(period)
             led.value = not led.value
             analog_voltage = chan.voltage
+            alive = not alive
     except KeyboardInterrupt:
         print("Program terminated by user")
         client.disconnect()
