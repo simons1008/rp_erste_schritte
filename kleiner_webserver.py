@@ -1,5 +1,8 @@
 # kleiner Webserver
 # Quelle: https://u-labs.de/portal/3-wege-1-verbotener-um-programme-auf-dem-raspberry-pi-os-automatisch-zu-starten/
+# Das Programm wird durch /home/ms/.config/autostart/autostart.desktop gestartet
+# - Prüfe, ob das Programm läuft: ps -fC python
+# - Wenn ja, kann es hier nicht nochmal gestartet werden!!
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import signal
