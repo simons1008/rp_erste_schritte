@@ -13,7 +13,7 @@ import busio
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
    
-ACCESS_TOKEN = "vu3FCDn3RH6VeWgHyX4n"
+ACCESS_TOKEN = "TEST_TOKEN"
 THINGSBOARD_SERVER = 'thingsboard.cloud'
 
 logging.basicConfig(level=logging.DEBUG)
