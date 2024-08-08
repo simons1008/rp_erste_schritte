@@ -71,5 +71,8 @@ schaltflaeche.grid(row=2, column=4)
 # Funktion zum ersten Mal aufrufen
 analogwert_in_geschwindigkeit()
 
+# auch beim Schließen des Fensters die Funktion aufrufen
+root.protocol("WM_DELETE_WINDOW", close_window)
+
 # Hauptschleife, damit die GUI angezeigt wird
 root.mainloop()
