@@ -12,3 +12,4 @@ Meine ersten Schritte mit Raspberry Pi und OS Bookworm umfassen:
 - GUI zur Darstellung der Analogwerte vom ADS1115
 - Verbindung zum ThingsBoard Live Demo Server, Senden von Telemetrie-Daten, Empfang der "blinkingPeriod"
 - FileLock beim konkurrierenden Zugriff auf eine Datei
+- Raspberry Pi und Arduino I2C Kommunikation
