@@ -6,7 +6,7 @@ back the response from the Arduino
 Tested on Raspberry Pi 4 B+ and Adafruit Feather M0+
 '''
 # Quelle: https://community.element14.com/products/arduino/b/blog/posts/raspberry-pi-and-arduino-i2c-communication
-# Geändert: i2cData wechselt zwischen 0 und 255
+# Geändert: i2cData zählt von 0 bis 255
 # Getestet mit Raspberry Pi 4 B und Arduino UNO R3
 
 import smbus
@@ -15,10 +15,10 @@ import sys
 bus = smbus.SMBus(1)
 address = 0x04              # Arduino I2C Address
 def main():
-    i2cData = False
+    i2cData = 240
     while 1:
         # send data
-        i2cData = ~i2cData & 0xFF  # unsigned integer 
+        i2cData = i2cData + 1  # unsigned integer 
         bus.write_byte(address,i2cData)
         
         # request data
